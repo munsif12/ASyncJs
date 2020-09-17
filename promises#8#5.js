@@ -5,7 +5,7 @@ const ids = new Promise((resolve, reject) => {
         console.log(ids);
     }, 1500);
 });
-const user = ids => {
+const user = (ids) => {
     return new Promise((resolve, reject) => {
         setTimeout((ids) => {
             const data = {
@@ -20,7 +20,7 @@ const user = ids => {
         }, 1500, ids);
     });
 };
-const info = data => {
+const info = (data) => {
     return new Promise((resolve, reject) => {
         setTimeout((data) => {
             const eduInfo = {
@@ -29,7 +29,7 @@ const info = data => {
                 degre: 'bscs-6A'
             }
             if (data.name === eduInfo.name) {
-                console.log(`My University is ${eduInfo.uni} and my degree is ${eduInfo.degre}`);
+                resolve(`My University is ${eduInfo.uni} and my degree is ${eduInfo.degre}`);
             }
             else {
                 console.log('data no matched');
@@ -37,12 +37,26 @@ const info = data => {
         }, 1500, data);
     });
 }
-ids.then(ids => {
-    return user(ids);
-}).then(data => {
-    console.log(data);
-    info(data);
+//MAIN
+// ids.then(ids => {
+//     return user(ids);
+// }).then(data => {
+//     console.log(data);
+//     return info(data); 
+// }).then(info => {
+//     console.log(info);
+// }).catch(error => {
+//     console.log('error');
+// });
 
+//two ways to use (then) but the effective way the the upper 1
+ids.then(ids => {
+    user(ids).then(data => {
+        console.log(data);
+        info(data).then(info => {
+            console.log(info);
+        });
+    });
 }).catch(error => {
     console.log('error');
 });
